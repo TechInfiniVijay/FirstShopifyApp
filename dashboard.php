@@ -99,6 +99,31 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
                             <label for="message-text" class="col-form-label">Description :</label>
                             <textarea class="form-control" name="desc" id="desc"></textarea>
                         </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="addOptions" id="addOptions"
+                                    value="1">This product has options, like size or color
+                            </label>
+                        </div>
+
+                        <div id="addProductOptions">
+                            <div class="form-group">
+                            <label for="">Option Name :</label>
+                                <input type="text" name="optionType" id="optionType" class="form-control" list="optionList" placeholder="Size">
+                                <datalist id="optionList">
+                                    <option value="Size">
+                                    <option value="Color">
+                                    <option value="Material">
+                                    <option value="Style">
+                                </datalist>
+                            </div>
+                            <div class="form-group" id="optionAddValue">
+                                <label for="">Option Value :</label>
+                                <input type="text" name="optionValue[]" class="form-control" id="optionValue">
+                            </div>
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">

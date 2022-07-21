@@ -55,3 +55,28 @@ $("#updateBtn").on("click", function () {
     });
 });
 // Update Product End
+
+// Options
+$('#addOptions').click(function(){
+    if($(this).is(':checked')){
+        $('#addProductOptions').show();
+    }else{
+        $('#addProductOptions').hide();
+        resetFormVal()
+    }
+});
+if(document.getElementById('optionValue') != null){
+    var html = '';
+    html += '<input type="text" name="optionValue[]" class="form-control">';
+    $('#optionAddValue').append(html);
+}else{
+
+}
+// $("#optionValue").val(function(){
+//     // $("body").css("background-color", "pink");
+        
+//   });
+
+function resetFormVal(){
+    $('#optionType').val(null);
+}
