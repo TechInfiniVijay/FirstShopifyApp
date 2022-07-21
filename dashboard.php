@@ -218,10 +218,10 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
     // Filter Product
     function filterProduct() {
         var input, filter, table, tr, td, i, txtValue;
-        input = $("#filtertxt").val();
-        filter = input.toUpperCase();
+        input = document.getElementById("filtertxt");
+        filter = input.value.toUpperCase();
         table = document.getElementById("productTable");
-        tr = table.getElementsByTagName("tbody tr");
+        tr = table.getElementsByTagName("tr");
 
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td")[0];

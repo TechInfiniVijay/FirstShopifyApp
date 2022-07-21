@@ -55,5 +55,3 @@ $("#updateBtn").on("click", function () {
     });
 });
 // Update Product End
-
-
