@@ -7,10 +7,10 @@ header("Access-Control-Allow-Origin: *");
 // header("Content-Security-Policy:  blob:; object-src *");
 
 if(!defined('SHOPIFY_APP_API_KEY')){
-	define('SHOPIFY_APP_API_KEY', '11b698fa55704bfc60c7073a6c1377d2');
+	define('SHOPIFY_APP_API_KEY', 'Key_paste');
 }
 if(!defined('SHOPIFY_APP_SHARED_SECRET')){
-	define('SHOPIFY_APP_SHARED_SECRET', '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');
+	define('SHOPIFY_APP_SHARED_SECRET', 'key_paste');
 }
 // SHOPIFY_SITE_URL = your App main directory Url
 if(!defined('SHOPIFY_SITE_URL')){
