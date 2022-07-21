@@ -57,26 +57,39 @@ $("#updateBtn").on("click", function () {
 // Update Product End
 
 // Options
-$('#addOptions').click(function(){
-    if($(this).is(':checked')){
+$('#addOptions').click(function () {
+    if ($(this).is(':checked')) {
         $('#addProductOptions').show();
-    }else{
+    } else {
         $('#addProductOptions').hide();
         resetFormVal()
     }
 });
-if(document.getElementById('optionValue') != null){
+
+$("#addRow1").click(function () {
     var html = '';
-    html += '<input type="text" name="optionValue[]" class="form-control">';
+    html += '<div class="row mb-2" id="inputRow1">';
+    html += '<div class="col-lg-10 col-sm-10 col-md-10">';
+    html += '<input type="text" name="optionValue[]" class="form-control mb-2 optionValue">';
+    html += '</div>';
+    html += '<div class="col-lg-2 col-sm-2 col-md-2">'
+    html += '<a href="javascript:void(0)" class="btn btn-danger" id="removeRow1"><i class="fa fa-trash"></i></a>'
+    html += '</div>'
+    html += '</div>';
+
     $('#optionAddValue').append(html);
-}else{
+});
+$(document).on('click', '#removeRow1', function () {
+    $(this).closest('#inputRow1').remove();
+});
 
-}
-// $("#optionValue").val(function(){
-//     // $("body").css("background-color", "pink");
-        
-//   });
+$(document).on('click', '#optionTypeRemove', function () {
+    $('#addProductOptions').hide();
+    $("#addOptions").prop("checked", false);
+    resetFormVal()
+});
 
-function resetFormVal(){
+function resetFormVal() {
     $('#optionType').val(null);
+    $('.optionValue').val(null);
 }

@@ -109,20 +109,41 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
 
                         <div id="addProductOptions">
                             <div class="form-group">
-                            <label for="">Option Name :</label>
-                                <input type="text" name="optionType" id="optionType" class="form-control" list="optionList" placeholder="Size">
-                                <datalist id="optionList">
-                                    <option value="Size">
-                                    <option value="Color">
-                                    <option value="Material">
-                                    <option value="Style">
-                                </datalist>
+                                <label for="">Option Name :</label>
+                                <div class="row mb-2">
+                                    <div class="col-lg-10 col-sm-10 col-md-10">
+                                        <input type="text" name="optionType" id="optionType" class="form-control"
+                                            list="optionList" placeholder="Size">
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-md-2">
+                                        <a href="javascript:void(0)" class="btn btn-danger" id="optionTypeRemove"><i
+                                                class="fa fa-trash"></i></a>
+                                    </div>
+                                    <datalist id="optionList">
+                                        <option value="Size">
+                                        <option value="Color">
+                                        <option value="Material">
+                                        <option value="Style">
+                                    </datalist>
+                                </div>
+
+
+
+                                <div class="form-group" id="optionAddValue">
+                                    <label for="">Option Value :</label>
+                                    <div class="row mb-2">
+                                        <div class="col-lg-10 col-sm-10 col-md-10">
+                                            <input type="text" name="optionValue[]"
+                                                class="form-control mb-2 optionValue">
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 col-md-2">
+                                            <a href="javascript:void(0)" class="btn btn-primary" id="addRow1"><i
+                                                    class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="form-group" id="optionAddValue">
-                                <label for="">Option Value :</label>
-                                <input type="text" name="optionValue[]" class="form-control" id="optionValue">
-                            </div>
-                        </div>
 
                     </form>
                 </div>
