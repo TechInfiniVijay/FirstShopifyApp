@@ -5,20 +5,24 @@ include 'header.php';
 
 // Add New Product code
 if($_REQUEST['title'] && $_REQUEST['desc'] && $_REQUEST['status']){
-  $title = $_REQUEST['title'];
-  $description = $_REQUEST['desc'];
-  $status = $_REQUEST['status'];
-  $arr = array(
-    "product"=>array(
-      'id'=>$product_id,
-      'title'=>$title,
-      'body_html'=>$description,
-      'status'=> $status,
-    )
-  );
-  $productAdd = $shopify("POST /admin/api/2022-01/products.json",array(),$arr);
-//  echo "Product Successfully Add.";
-echo json_encode($productAdd);
+  echo "<pre>";
+  print_r($_REQUEST);
+  echo "</pre>";
+  // die();
+//   $title = $_REQUEST['title'];
+//   $description = $_REQUEST['desc'];
+//   $status = $_REQUEST['status'];
+//   $arr = array(
+//     "product"=>array(
+//       'id'=>$product_id,
+//       'title'=>$title,
+//       'body_html'=>$description,
+//       'status'=> $status,
+//     )
+//   );
+//   $productAdd = $shopify("POST /admin/api/2022-01/products.json",array(),$arr);
+// //  echo "Product Successfully Add.";
+// echo json_encode($productAdd);
 
 }
 // Add New Product code End

@@ -33,7 +33,7 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
                 <div class="col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                            data-target=".bd-shopifyAdd-modal-lg"><i class="fa fa-plus"></i> Add</button>
+                            data-target="#shopifyAdd"><i class="fa fa-plus"></i> Add</button>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
     </div>
 
     <!-- Add Model Form Start-->
-    <div class="modal fade bd-shopifyAdd-modal-lg" id="shopifyAdd" tabindex="-1" role="dialog"
+    <div class="modal fade" id="shopifyAdd" tabindex="-1" role="dialog"
         aria-labelledby="shopifyAddLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -102,7 +102,7 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
 
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">Tags :</label>
-                            <input type="text" name="title" class="form-control" id="title">
+                            <input type="text" name="tags" class="form-control" id="title">
                             <small>All Tags Comma Sepreted.</small>
                         </div>
 
@@ -191,16 +191,18 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
                 $this.attr('disabled', false).html($caption);
                 resetForm(form);
                 $('#shopifyAdd').modal('toggle');
+                $(".optionBox").remove();
+                $('#addNewoptionbtn').hide();
                 console.log(response)
                 // window.location.reload();
-                var response1 = JSON.parse(response)
-                $('#productTable tbody').prepend("<tr><td>" + response1.title + "</td><td>" +
-                    response1.body_html + "</td><td><span class='badge badge-success'>" +
-                    response1.status +
-                    "</span></td><td><a href='#' class='btn btn-primary' data-id='" + response1
-                    .id +
-                    "' data-toggle='modal' data-target='#shopifyCrud'><i class='fa fa-pencil-square-o'></i></a><a href='#' class='btn btn-danger' onclick='deleteProduct(this)' data-id='" +
-                    response1.id + "'><i class='fa fa-trash-o'></i></a></td></tr>");
+                // var response1 = JSON.parse(response)
+                // $('#productTable tbody').prepend("<tr><td>" + response1.title + "</td><td>" +
+                //     response1.body_html + "</td><td><span class='badge badge-success'>" +
+                //     response1.status +
+                //     "</span></td><td><a href='#' class='btn btn-primary' data-id='" + response1
+                //     .id +
+                //     "' data-toggle='modal' data-target='#shopifyCrud'><i class='fa fa-pencil-square-o'></i></a><a href='#' class='btn btn-danger' onclick='deleteProduct(this)' data-id='" +
+                //     response1.id + "'><i class='fa fa-trash-o'></i></a></td></tr>");
             },
             error: function(errorThrown) {
                 console.log(errorThrown);

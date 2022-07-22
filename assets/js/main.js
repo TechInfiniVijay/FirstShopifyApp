@@ -1,7 +1,7 @@
+"use strict"
+
 const shop = document.querySelector('#ShopValue').value
 const token = document.querySelector('#tokenValue').value
-
-
 
 // Get Data Model Form
 $(document).delegate("[data-target='#shopifyCrud']", "click", function () {
@@ -56,6 +56,11 @@ $("#updateBtn").on("click", function () {
 });
 // Update Product End
 
+function resetFormVal() {
+    $('#optionType').val(null);
+    $('.optionValue').val(null);
+}
+
 // Options
 $('#addOptions').click(function () {
     if ($(this).is(':checked')) {
@@ -70,18 +75,6 @@ $('#addOptions').click(function () {
         resetFormVal()
     }
 });
-var classes = 1;
-var id = 1;
-$('#addNewOptions').on('click', function () {
-    var selectNew = '#addProductOptions';
-    makeDiv((id++), (classes++), selectNew);
-})
-
-
-function resetFormVal() {
-    $('#optionType').val(null);
-    $('.optionValue').val(null);
-}
 
 function makeDiv(id = null, classes = null, selectorBox) {
     var div = '';
@@ -90,7 +83,8 @@ function makeDiv(id = null, classes = null, selectorBox) {
     div += "<label for=''>Option Name :</label>";
     div += "<div class='row mb-2'>";
     div += "<div class='col-lg-10 col-sm-10 col-md-10'>";
-    div += "<input type='text' name='optionType"+id+"[]' id='optionType" + id + "' class='form-control' list='optionList" + id + "' placeholder='Size'>";
+    div += "<input type='text' name='optionType" + id + "[]' id='optionType" + id + "' class='form-control optionType' list='optionList" + id + "' placeholder='Size'>";
+    div += "<div class='errorType'></div>";
     div += "</div>";
     div += "<div class='col-lg-2 col-sm-2 col-md-2'>";
     div += "<a href='javascript:void(0)' class='btn btn-danger removeDiv" + classes + "' data-id='optionBox" + id + "' id='optionTypeRemove" + id + "'><i class='fa fa-trash'></i></a>";
@@ -106,7 +100,7 @@ function makeDiv(id = null, classes = null, selectorBox) {
     div += "<label for=''>Option Value :</label>";
     div += "<div class='row mb-2'>";
     div += "<div class='col-lg-10 col-sm-10 col-md-10'>";
-    div += "<input type='text' name='optionValue"+id+"[]' class='form-control mb-2 optionValue" + classes + "'>";
+    div += "<input type='text' name='optionValue" + id + "[]' class='form-control mb-2 optionValue" + classes + "'>";
     div += "</div>";
     div += "<div class='col-lg-2 col-sm-2 col-md-2'>";
     div += "<a href='javascript:void(0)' class='btn btn-primary' id='addRow" + id + "'><i class='fa fa-plus'></i></a>";
@@ -121,7 +115,7 @@ function makeDiv(id = null, classes = null, selectorBox) {
         var html = '';
         html += '<div class="row mb-2 inputRow' + classes + '">';
         html += '<div class="col-lg-10 col-sm-10 col-md-10">';
-        html += '<input type="text" name="optionValue'+id+'[]" class="form-control mb-2 optionValue' + classes + '">';
+        html += '<input type="text" name="optionValue' + id + '[]" class="form-control mb-2 optionValue' + classes + '">';
         html += '</div>';
         html += '<div class="col-lg-2 col-sm-2 col-md-2">'
         html += '<a href="javascript:void(0)" class="btn btn-danger removeRow' + classes + '"><i class="fa fa-trash"></i></a>'
@@ -146,9 +140,23 @@ function makeDiv(id = null, classes = null, selectorBox) {
             $("#addOptions").prop("checked", false);
             resetFormVal();
         } else {
-             $("#"+divbox+"").remove();
+            $("#" + divbox + "").remove();
         }
     })
 
-
 }
+
+$(document).on('click','.optionType',function(){
+    let optionTypeValidate = $('.optionType').val()
+    if(optionTypeValidate === 'Style' && optionTypeValidate === 'Size' && optionTypeValidate === 'Color' && optionTypeValidate === 'Material'){
+    $('.errorType').append("<span class='text-danger'>This Type Already Used.</span>");
+    }
+});
+
+
+var classes = 1;
+var id = 1;
+$('#addNewOptions').on('click', function () {
+    var selectNew = '#addProductOptions';
+    makeDiv((id++), (classes++), selectNew);
+})
