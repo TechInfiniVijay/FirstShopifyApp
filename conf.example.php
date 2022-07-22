@@ -15,7 +15,7 @@ if(!defined('SHOPIFY_APP_SHARED_SECRET')){
 // SHOPIFY_SITE_URL = your App main directory Url
 if(!defined('SHOPIFY_SITE_URL')){
 	// define('SHOPIFY_SITE_URL', 'https://0ee6-2401-4900-1b2a-a1cc-2c2e-1d3a-b076-bc9.ngrok.io/donation-app/');
-	define('SHOPIFY_SITE_URL', 'https://appsworld2.xyz/deviago/ship_with_discount/');
+	define('SHOPIFY_SITE_URL', 'paste_url');
 }
 
 

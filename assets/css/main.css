@@ -1,3 +1,15 @@
-#addProductOptions{
+#addProductOptions {
     display: none;
+}
+
+
+.modal-content {
+    background-color: #ffb3ff !important;
+    border: 0px !important;
+}
+
+.modal-header {
+    background-color: #3399ff !important;
+    color: #ffffff;
+    border: 1px !important;
 }

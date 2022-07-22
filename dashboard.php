@@ -33,7 +33,7 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
                 <div class="col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                            data-target="#shopifyAdd"><i class="fa fa-plus"></i> Add</button>
+                            data-target=".bd-shopifyAdd-modal-lg"><i class="fa fa-plus"></i> Add</button>
                     </div>
                 </div>
             </div>
@@ -69,8 +69,8 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
     </div>
 
     <!-- Add Model Form Start-->
-    <div class="modal fade" id="shopifyAdd" tabindex="-1" role="dialog" aria-labelledby="shopifyAddLabel"
-        aria-hidden="true">
+    <div class="modal fade bd-shopifyAdd-modal-lg" id="shopifyAdd" tabindex="-1" role="dialog"
+        aria-labelledby="shopifyAddLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -100,51 +100,26 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
                             <textarea class="form-control" name="desc" id="desc"></textarea>
                         </div>
 
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Tags :</label>
+                            <input type="text" name="title" class="form-control" id="title">
+                            <small>All Tags Comma Sepreted.</small>
+                        </div>
+
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input type="checkbox" class="form-check-input" name="addOptions" id="addOptions"
                                     value="1">This product has options, like size or color
                             </label>
                         </div>
-
+ 
                         <div id="addProductOptions">
-                            <div class="form-group">
-                                <label for="">Option Name :</label>
-                                <div class="row mb-2">
-                                    <div class="col-lg-10 col-sm-10 col-md-10">
-                                        <input type="text" name="optionType" id="optionType" class="form-control"
-                                            list="optionList" placeholder="Size">
-                                    </div>
-                                    <div class="col-lg-2 col-sm-2 col-md-2">
-                                        <a href="javascript:void(0)" class="btn btn-danger" id="optionTypeRemove"><i
-                                                class="fa fa-trash"></i></a>
-                                    </div>
-                                    <datalist id="optionList">
-                                        <option value="Size">
-                                        <option value="Color">
-                                        <option value="Material">
-                                        <option value="Style">
-                                    </datalist>
-                                </div>
 
 
-
-                                <div class="form-group" id="optionAddValue">
-                                    <label for="">Option Value :</label>
-                                    <div class="row mb-2">
-                                        <div class="col-lg-10 col-sm-10 col-md-10">
-                                            <input type="text" name="optionValue[]"
-                                                class="form-control mb-2 optionValue">
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-md-2">
-                                            <a href="javascript:void(0)" class="btn btn-primary" id="addRow1"><i
-                                                    class="fa fa-plus"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
+                        </div>
+                        <div id="addNewoptionbtn" style="display:none;">
+                            <a href="#" id="addNewOptions">+ Add New Option</a>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
