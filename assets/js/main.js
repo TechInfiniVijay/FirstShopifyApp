@@ -172,7 +172,7 @@ $('#addNewOptions').on('click', function () {
 // $(document).on('keyup', '.char', function () {
 //     $(this).data('val', $(this).val());
 // });
-function variationBox(ids = null, classes = null, nameattr, val = null, selector) {
+function variationBox(ids = null, classes = null, value = null, nameattr, selector) {
     var variationBox = '';
     variationBox += `<div class="variantBox" id="variantBox${ids}" data-id="variantBox${ids}">
                             <div class="row">
@@ -180,7 +180,7 @@ function variationBox(ids = null, classes = null, nameattr, val = null, selector
                                         <input type="file" name="variantImg[]" class="img-fluid form-control dropify">
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 form-group">
-                                    <input type="text" name="${nameattr}[]" value="${val}" class="form-control" id="">
+                                    <input type="text" name="${nameattr}[]" value="${value}" class="form-control" id="">
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 form-group">
                                     <input type="text" name="price[]" class="form-control" id=""
@@ -194,34 +194,27 @@ function variationBox(ids = null, classes = null, nameattr, val = null, selector
 var idss = 1;
 var classess = 1;
 
-var optionDatas = '';
-// $('.optionType').focusout(function () {
-//     optionDatas = $(this).val();
-//     console.log('optionDatas')
-// });
-// '.dataOptions'
-// '.optionType'
-$('.optionType').mouseout(function () {
-    optionDatas = $(this).val();
-    console.log(optionDatas)
-});
+let nameRow = '';
+$(document).on('change', '.optionType', function () {
+    nameRow = $(this).val();
+})
 
 $(document).on('keyup', '.char', function (e) {
     var current = $(this).val();
     const prev = this.getAttribute('data-append');
     var selectVar = '#variants';
 
-    var currentVal = [];
+    var currentVal = '';
     $(this).each(function () {
         currentVal = $(this).val();
-        c("inner : " + currentVal)
     });
-
+    var currentVal1 = $(`input[name=${nameRow}]`).val(currentVal);
+    c(currentVal1)
     if (current.length === 1 && prev !== "true") {
         this.setAttribute('data-append', true)
         this.setAttribute('data-div', `variantBox${idss++}`)
 
-        variationBox((idss++), (classess++), optionDatas, currentVal, selectVar)
+        variationBox((idss++), (classess++), currentVal1, nameRow, selectVar)
     }
     //  else if (current.length === 0 && prev === "true") {
     //     const dataDiv = $(this).data('div')
