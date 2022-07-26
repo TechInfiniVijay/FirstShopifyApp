@@ -3,6 +3,13 @@
 const shop = document.querySelector('#ShopValue').value
 const token = document.querySelector('#tokenValue').value
 
+function a(data) {
+    alert(data)
+}
+function c(data) {
+    console.log(data)
+}
+
 // Get Data Model Form
 $(document).delegate("[data-target='#shopifyCrud']", "click", function () {
     var productId = $(this).attr('data-id');
@@ -72,6 +79,7 @@ $('#addOptions').click(function () {
         $('#addProductOptions').hide();
         $('#addNewoptionbtn').hide();
         $(".optionBox").remove();
+        $(".variantBox").remove();
         resetFormVal()
     }
 });
@@ -89,7 +97,7 @@ function makeDiv(id = null, classes = null, selectorBox) {
     div += "<div class='col-lg-2 col-sm-2 col-md-2'>";
     div += "<a href='javascript:void(0)' class='btn btn-danger removeDiv" + classes + "' data-id='optionBox" + id + "' id='optionTypeRemove" + id + "'><i class='fa fa-trash'></i></a>";
     div += "</div>";
-    div += "<datalist id='optionList" + id + "'>";
+    div += "<datalist id='optionList" + id + "' class='dataOptions' name='optionList'>";
     div += "<option value='Size'>";
     div += "<option value='Color'>";
     div += "<option value='Material'>";
@@ -100,7 +108,7 @@ function makeDiv(id = null, classes = null, selectorBox) {
     div += "<label for=''>Option Value :</label>";
     div += "<div class='row mb-2'>";
     div += "<div class='col-lg-10 col-sm-10 col-md-10'>";
-    div += "<input type='text' name='optionValue" + id + "[]' class='form-control mb-2 optionValue" + classes + "'>";
+    div += "<input type='text' name='optionValue" + id + "[]' data-append='false'  class='form-control mb-2 char optionValue" + classes + "'>";
     div += "</div>";
     div += "<div class='col-lg-2 col-sm-2 col-md-2'>";
     div += "<a href='javascript:void(0)' class='btn btn-primary' id='addRow" + id + "'><i class='fa fa-plus'></i></a>";
@@ -115,7 +123,7 @@ function makeDiv(id = null, classes = null, selectorBox) {
         var html = '';
         html += '<div class="row mb-2 inputRow' + classes + '">';
         html += '<div class="col-lg-10 col-sm-10 col-md-10">';
-        html += '<input type="text" name="optionValue' + id + '[]" class="form-control mb-2 optionValue' + classes + '">';
+        html += '<input type="text" name="optionValue' + id + '[]" data-val="" class="form-control mb-2 char optionValue' + classes + '">';
         html += '</div>';
         html += '<div class="col-lg-2 col-sm-2 col-md-2">'
         html += '<a href="javascript:void(0)" class="btn btn-danger removeRow' + classes + '"><i class="fa fa-trash"></i></a>'
@@ -137,6 +145,7 @@ function makeDiv(id = null, classes = null, selectorBox) {
             $("#optionBox0").remove();
             $(".optionBox").remove();
             $('#addNewoptionbtn').hide();
+            $(".variantBox").remove();
             $("#addOptions").prop("checked", false);
             resetFormVal();
         } else {
@@ -146,17 +155,79 @@ function makeDiv(id = null, classes = null, selectorBox) {
 
 }
 
-$(document).on('click','.optionType',function(){
-    let optionTypeValidate = $('.optionType').val()
-    if(optionTypeValidate === 'Style' && optionTypeValidate === 'Size' && optionTypeValidate === 'Color' && optionTypeValidate === 'Material'){
-    $('.errorType').append("<span class='text-danger'>This Type Already Used.</span>");
-    }
-});
-
+// $(document).on('input', '.optionType', function () {
+//     let optionTypeValidate = $(this).val()
+//     if (optionTypeValidate === 'Style' && optionTypeValidate === 'Size' && optionTypeValidate === 'Color' && optionTypeValidate === 'Material') {
+//         $('.errorType').append("<span class='text-danger'>This Type Already Used.</span>");
+//     }
+// });
 
 var classes = 1;
 var id = 1;
 $('#addNewOptions').on('click', function () {
     var selectNew = '#addProductOptions';
     makeDiv((id++), (classes++), selectNew);
+})
+
+// $(document).on('keyup', '.char', function () {
+//     $(this).data('val', $(this).val());
+// });
+function variationBox(ids = null, classes = null, nameattr, val = null, selector) {
+    var variationBox = '';
+    variationBox += `<div class="variantBox" id="variantBox${ids}" data-id="variantBox${ids}">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-4 col-lg-4 form-group variantImage">
+                                        <input type="file" name="variantImg[]" class="img-fluid form-control dropify">
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+                                    <input type="text" name="${nameattr}[]" value="${val}" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+                                    <input type="text" name="price[]" class="form-control" id=""
+                                        placeholder="Price">
+                                </div>
+                            </div>
+                        </div>`;
+    $("" + selector + "").append(variationBox);
+    $('.dropify').dropify()
+}
+var idss = 1;
+var classess = 1;
+
+var optionDatas = '';
+// $('.optionType').focusout(function () {
+//     optionDatas = $(this).val();
+//     console.log('optionDatas')
+// });
+// '.dataOptions'
+// '.optionType'
+$('.optionType').mouseout(function () {
+    optionDatas = $(this).val();
+    console.log(optionDatas)
+});
+
+$(document).on('keyup', '.char', function (e) {
+    var current = $(this).val();
+    const prev = this.getAttribute('data-append');
+    var selectVar = '#variants';
+
+    var currentVal = [];
+    $(this).each(function () {
+        currentVal = $(this).val();
+        c("inner : " + currentVal)
+    });
+
+    if (current.length === 1 && prev !== "true") {
+        this.setAttribute('data-append', true)
+        this.setAttribute('data-div', `variantBox${idss++}`)
+
+        variationBox((idss++), (classess++), optionDatas, currentVal, selectVar)
+    }
+    //  else if (current.length === 0 && prev === "true") {
+    //     const dataDiv = $(this).data('div')
+    //     c(dataDiv)
+    //     $('.variantBox').remove();
+    // } else {
+    //     // 
+    // }
 })

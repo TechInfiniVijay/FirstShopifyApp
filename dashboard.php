@@ -15,6 +15,7 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
@@ -69,8 +70,8 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
     </div>
 
     <!-- Add Model Form Start-->
-    <div class="modal fade" id="shopifyAdd" tabindex="-1" role="dialog"
-        aria-labelledby="shopifyAddLabel" aria-hidden="true">
+    <div class="modal fade" id="shopifyAdd" tabindex="-1" role="dialog" aria-labelledby="shopifyAddLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -112,14 +113,18 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
                                     value="1">This product has options, like size or color
                             </label>
                         </div>
- 
-                        <div id="addProductOptions">
 
-
-                        </div>
+                        <div id="addProductOptions"></div>
                         <div id="addNewoptionbtn" style="display:none;">
                             <a href="#" id="addNewOptions">+ Add New Option</a>
                         </div>
+
+                        <div id="variants">
+                            
+
+                            
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -170,6 +175,7 @@ $products = $shopify("GET /admin/api/2022-01/products.json");
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script src="./assets/js/main.js"></script>
     <script>
     var shop1 = document.querySelector('#ShopValue').value
