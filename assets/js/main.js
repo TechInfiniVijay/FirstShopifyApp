@@ -68,30 +68,16 @@ function resetFormVal() {
     $('.optionValue').val(null);
 }
 
-// Options
-$('#addOptions').click(function () {
-    if ($(this).is(':checked')) {
-        $('#addProductOptions').show();
-        $('#addNewoptionbtn').show();
-        var select = '#addProductOptions';
-        makeDiv(0, 0, select);
-    } else {
-        $('#addProductOptions').hide();
-        $('#addNewoptionbtn').hide();
-        $(".optionBox").remove();
-        $(".variantBox").remove();
-        resetFormVal()
-    }
-});
+var varDivCount = '';
 
-function makeDiv(id = null, classes = null, selectorBox) {
+function makeDiv(id = null, classes = null, nameData, selectorBox, placeholder = 'Size') {
     var div = '';
     div += "<div id='optionBox" + id + "' class='optionBox'>"
     div += "<div class='form-group'>";
     div += "<label for=''>Option Name :</label>";
     div += "<div class='row mb-2'>";
     div += "<div class='col-lg-10 col-sm-10 col-md-10'>";
-    div += "<input type='text' name='optionType" + id + "[]' id='optionType" + id + "' class='form-control optionType' list='optionList" + id + "' placeholder='Size'>";
+    div += "<input type='text' name='optionType" + id + "[]' id='optionType" + id + "' class='form-control optionType' data-class='' list='optionList" + id + "' placeholder=" + placeholder + ">";
     div += "<div class='errorType'></div>";
     div += "</div>";
     div += "<div class='col-lg-2 col-sm-2 col-md-2'>";
@@ -108,7 +94,8 @@ function makeDiv(id = null, classes = null, selectorBox) {
     div += "<label for=''>Option Value :</label>";
     div += "<div class='row mb-2'>";
     div += "<div class='col-lg-10 col-sm-10 col-md-10'>";
-    div += "<input type='text' name='optionValue" + id + "[]' data-append='false'  class='form-control mb-2 char optionValue" + classes + "'>";
+    div += "<input type='text' name='optionValue" + id + "[]' data-append='false' data-val='" + nameData + "'  class='form-control mb-2 char optionValue" + classes + "'>";
+    div += `<p id="error" data-append="false"></p>`;
     div += "</div>";
     div += "<div class='col-lg-2 col-sm-2 col-md-2'>";
     div += "<a href='javascript:void(0)' class='btn btn-primary' id='addRow" + id + "'><i class='fa fa-plus'></i></a>";
@@ -138,8 +125,20 @@ function makeDiv(id = null, classes = null, selectorBox) {
     });
 
 
+    $(document).on('click', '#addNewoptionbtn', function () {
+        varDivCount = $('.optionBox').length
+        // c(varDivCount)
+        if (varDivCount >= 3) {
+            $('#addNewoptionbtn').hide();
+        }
+    })
+
+
     $(document).on('click', '.removeDiv' + classes, function (e) {
         var divbox = $(this).attr('data-id');
+        if (varDivCount >= 2) {
+            $('#addNewoptionbtn').show();
+        }
         if (divbox === 'optionBox0') {
             $('#addProductOptions').hide();
             $("#optionBox0").remove();
@@ -152,7 +151,6 @@ function makeDiv(id = null, classes = null, selectorBox) {
             $("#" + divbox + "").remove();
         }
     })
-
 }
 
 // $(document).on('input', '.optionType', function () {
@@ -162,25 +160,55 @@ function makeDiv(id = null, classes = null, selectorBox) {
 //     }
 // });
 
-var classes = 1;
-var id = 1;
-$('#addNewOptions').on('click', function () {
-    var selectNew = '#addProductOptions';
-    makeDiv((id++), (classes++), selectNew);
+let nameRow = '';
+$(document).on('change', '.optionType', function () {
+    nameRow = $(this).val();
+    this.setAttribute('data-class', nameRow)
 })
 
-// $(document).on('keyup', '.char', function () {
-//     $(this).data('val', $(this).val());
-// });
-function variationBox(ids = null, classes = null, value = null, nameattr, selector) {
+
+// Options
+$('#addOptions').click(function () {
+    if ($(this).is(':checked')) {
+        $('#addProductOptions').show();
+        $('#addNewoptionbtn').show();
+        var select = '#addProductOptions';
+        makeDiv(0, 0, nameRow, select);
+    } else {
+        $('#addProductOptions').hide();
+        $('#addNewoptionbtn').hide();
+        $(".optionBox").remove();
+        $(".variantBox").remove();
+        resetFormVal()
+    }
+});
+
+var classes = 1;
+var id = 1;
+var placeholder = '';
+$('#addNewOptions').on('click', function () {
+    var selectNew = '#addProductOptions';
+    console.log(varDivCount)
+    if (varDivCount == 2) {
+        placeholder = "Color"
+    } else if (varDivCount == 3) {
+        placeholder = "Material"
+    } else {
+        placeholder = "Style"
+    }
+    makeDiv((id++), (classes++), nameRow, selectNew, placeholder);
+})
+
+function variationBox(ids = null, classes = null, value, nameattr, selector) {
     var variationBox = '';
-    variationBox += `<div class="variantBox" id="variantBox${ids}" data-id="variantBox${ids}">
+
+    variationBox += `<div class="variantBox ${nameattr}${classes}" id="variantBox${ids}" data-id="variantBox${ids}">
                             <div class="row">
                                 <div class="col-sm-4 col-md-4 col-lg-4 form-group variantImage">
                                         <input type="file" name="variantImg[]" class="img-fluid form-control dropify">
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 form-group">
-                                    <input type="text" name="${nameattr}[]" value="${value}" class="form-control" id="">
+                                    <input type="text" name="${nameattr}[]" value="${value}" class="form-control ${nameattr}" data-val="${nameattr}" id="">
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 form-group">
                                     <input type="text" name="price[]" class="form-control" id=""
@@ -194,12 +222,8 @@ function variationBox(ids = null, classes = null, value = null, nameattr, select
 var idss = 1;
 var classess = 1;
 
-let nameRow = '';
-$(document).on('change', '.optionType', function () {
-    nameRow = $(this).val();
-})
-
 $(document).on('keyup', '.char', function (e) {
+
     var current = $(this).val();
     const prev = this.getAttribute('data-append');
     var selectVar = '#variants';
@@ -208,19 +232,28 @@ $(document).on('keyup', '.char', function (e) {
     $(this).each(function () {
         currentVal = $(this).val();
     });
-    var currentVal1 = $(`input[name=${nameRow}]`).val(currentVal);
-    c(currentVal1)
-    if (current.length === 1 && prev !== "true") {
-        this.setAttribute('data-append', true)
-        this.setAttribute('data-div', `variantBox${idss++}`)
 
-        variationBox((idss++), (classess++), currentVal1, nameRow, selectVar)
+    if (current.length === 1 && prev !== "true") {
+        const selectP = document.getElementById("error");
+        const prevError = selectP.getAttribute('data-append');
+
+        if (nameRow !== '' && prevError !== "true") {
+            if (current.length === 1) {
+                this.setAttribute('data-append', true)
+            }
+            variationBox((idss++), (classess++), currentVal, nameRow, selectVar)
+            // var getVal = document.querySelector(`.${nameRow}`);
+            // var currentVal1 = getVal.setAttribute('data-val', currentVal)
+            // var count = $(`.${nameRow}${(classess++)}`).length;
+            // c(count)
+        } else {
+            selectP.setAttribute('data-append', true)
+            $('#error').append(`<span class="text-danger errorSpan">Please Select Option Type First.</span>`);
+        }
     }
-    //  else if (current.length === 0 && prev === "true") {
-    //     const dataDiv = $(this).data('div')
-    //     c(dataDiv)
-    //     $('.variantBox').remove();
-    // } else {
-    //     // 
-    // }
-})
+    else if (current.length === 0 && prev === true && prevError === true) {
+        $('.errorSpan').remove();
+    } else {
+        // 
+    }
+});
